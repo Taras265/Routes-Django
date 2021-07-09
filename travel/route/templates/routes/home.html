@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Знайти дорогу</h1>
+<h2>Маршрут з міста {{cities.from_city.name}} у місто {{cities.to_city.name}}</h2>
+<div class="row">
+    <div class="col-md-8 mx-auto">
+            {% if routes %}
+                <br>
+                <h4>Найкоротший маршрут</h4>
+                {% for route in routes %}
+                    <br>
+                    <form action="{% url 'create_route' %}" method="post"> {% csrf_token %}
+                        <input type="hidden" name="from_city" value="{{ cities.from_city.id }}">
+                        <input type="hidden" name="to_city" value="{{ cities.to_city.id }}">
+                        <input type="hidden" name="total_time" value="{{ route.total_time }}">
+                        <input type="hidden" name="trains"
+                               value="{% for train in route.trains %}{{ train.id }},{% endfor %}">
+                        <h6>Час путі {{ route.total_time }} годин</h6>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Список поїздів по цьому маршруту</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for train in route.trains %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ train }}</td>
+                                </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-success">Зберегти</button>
+                    </form>
+                {% endfor %}
+            {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form action="/find_routes/" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Знайти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

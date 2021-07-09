@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Додати мiсто</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form action="/add_route/" method="post">{% csrf_token %}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field }}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <br>
+            <button type="submit" class="btn btn-primary">Додати мiсто</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

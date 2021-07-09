@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список поїздів</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Номер поїзда</th>
+        <th scope="col">Час путі</th>
+        <th scope="col">З міста</th>
+        <th scope="col">У місто</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in page_obj %}
+          <tr>
+            <td>
+              <a href="{% url 'trains:deteil' pk=object.pk %}">
+                {{ object.name }}
+              </a>
+            </td>
+            <td>{{ object.travel_time }}</td>
+            <td>{{ object.from_city }}</td>
+            <td>{{ object.to_city }}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      {% for page in page_obj.paginator.page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+        <li class="page-item"></li>
+      {% endfor %}
+    </li>
+  </ul>
+</nav>
+{% endblock %}

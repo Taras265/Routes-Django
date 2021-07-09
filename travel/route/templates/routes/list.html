@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список поїздів</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Імя маршруту</th>
+        <th scope="col">Звідки</th>
+        <th scope="col">Куди</th>
+        <th scope="col">Час</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in page_obj %}
+          <tr>
+            <td>
+              <a href="{% url 'deteil' pk=object.pk %}">
+                {{ object.name }}
+              </a>
+            </td>
+            <td>{{ object.from_city }}</td>
+            <td>{{ object.to_city }}</td>
+            <td>{{ object.travel_times }}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

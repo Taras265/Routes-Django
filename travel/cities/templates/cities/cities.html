@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список мiст</h1>
+<div class="row">
+    <div class="col-md">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Місто</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for object in page_obj %}
+                  <tr>
+                    <td>
+                        <a href="{% url 'cities:deteil' pk=object.pk %}">
+                            {{ object.name }}
+                        </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      {% for page in page_obj.paginator.page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+        <li class="page-item"></li>
+      {% endfor %}
+    </li>
+  </ul>
+</nav>
+{% endblock %}
